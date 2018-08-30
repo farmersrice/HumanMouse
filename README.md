@@ -7,3 +7,5 @@ Paths are adjusted between any two points using simple translation, rotation, an
 
 Better support for selecting paths based on their duration and original length may be added in future.
 
+<a href="https://imgur.com/B8EAIg4"><img src="https://i.imgur.com/B8EAIg4.gif" title="HumanMouse"/></a>
+
