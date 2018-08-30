@@ -25,7 +25,6 @@ public class HumanMouseDemo extends JPanel implements MouseListener {
         recordingArea.addMouseListener(this);
 
         setPreferredSize(new Dimension(850, 1100));
-        //setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     }
 
     @Override

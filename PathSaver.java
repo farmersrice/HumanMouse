@@ -25,7 +25,6 @@ public class PathSaver extends JPanel implements MouseMotionListener, MouseListe
         recordingArea.addMouseListener(this);
 
         setPreferredSize(new Dimension(850, 1100));
-        //setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     }
 
     public ArrayList<Path> getPaths() {
@@ -76,7 +75,6 @@ public class PathSaver extends JPanel implements MouseMotionListener, MouseListe
     }
 
     private static void setupGUI() {
-        //Create and set up the window.
         JFrame frame = new JFrame("PathSaver");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -84,7 +82,6 @@ public class PathSaver extends JPanel implements MouseMotionListener, MouseListe
         saver.setOpaque(true);
         frame.setContentPane(saver);
 
-        //Display the window.
         frame.pack();
         frame.setVisible(true);
         frame.addWindowListener(new WindowAdapter() {
