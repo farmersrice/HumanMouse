@@ -20,6 +20,10 @@ public class Path {
         }
     }
 
+    public int size() {
+        return points.size();
+    }
+
     public Path(String input) {
         StringTokenizer st = new StringTokenizer(input);
 
@@ -75,5 +79,8 @@ public class Path {
         for (Point p : points) {
             p.scale(start, scaleFactor);
         }
+
+        points.set(points.size() - 1, (Point) end.clone()); //we do not want to modify end point, but want to ensure
+        //that it lands on the right point every time
     }
 }

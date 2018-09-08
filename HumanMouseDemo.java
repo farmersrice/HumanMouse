@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * Created by farmersrice on 8/28/2018.
@@ -12,7 +9,7 @@ import java.util.StringTokenizer;
 public class HumanMouseDemo extends JPanel implements MouseListener {
 
     boolean halfDone = false;
-    static ArrayList<Path> paths = new ArrayList<Path>();
+    PathManager manager;
     RecordingArea recordingArea;
     Point start;
     Point end;
@@ -32,8 +29,7 @@ public class HumanMouseDemo extends JPanel implements MouseListener {
         if (halfDone) {
             end = new Point(e.getX(), e.getY());
 
-            Path p = (Path) paths.get((int)(Math.random() * paths.size())).clone();
-            p.adjust(start, end);
+            Path p = manager.generate(start, end);
 
             recordingArea.setCurrentPath(p);
             recordingArea.repaint();
@@ -67,16 +63,18 @@ public class HumanMouseDemo extends JPanel implements MouseListener {
         JFrame frame = new JFrame("HumanMouseDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JComponent component = new HumanMouseDemo();
+        HumanMouseDemo component = new HumanMouseDemo();
         component.setOpaque(true);
         frame.setContentPane(component);
 
         frame.pack();
         frame.setVisible(true);
+
+        component.manager = new PathManager();
+        component.manager.read("paths.txt");
     }
 
     public static void main(String[] args) {
-        PathStorageManager.read("paths.txt", paths);
         SwingUtilities.invokeLater(() -> setupGUI());
     }
 

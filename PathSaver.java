@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -13,8 +10,9 @@ import java.util.ArrayList;
 public class PathSaver extends JPanel implements MouseMotionListener, MouseListener {
 
     boolean recording = false;
-    ArrayList<Path> paths = new ArrayList<Path>();
     RecordingArea recordingArea;
+    PathManager manager;
+    Path current;
 
     public PathSaver() {
         super(new GridLayout(0,1));
@@ -27,10 +25,6 @@ public class PathSaver extends JPanel implements MouseMotionListener, MouseListe
         setPreferredSize(new Dimension(850, 1100));
     }
 
-    public ArrayList<Path> getPaths() {
-        return paths;
-    }
-
     @Override
     public void mouseDragged(MouseEvent e) {
 
@@ -39,16 +33,17 @@ public class PathSaver extends JPanel implements MouseMotionListener, MouseListe
     @Override
     public void mouseMoved(MouseEvent e) {
         if (recording) {
-            paths.get(paths.size() - 1).add(new Point(e.getX(), e.getY()));
+            current.add(new Point(e.getX(), e.getY()));
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (!recording) {
-            paths.add(new Path());
+            manager.appendPath(current);
+            current = new Path();
         } else {
-            recordingArea.setCurrentPath(paths.get(paths.size() - 1));
+            recordingArea.setCurrentPath(current);
             recordingArea.repaint();
         }
         recording = !recording;
@@ -82,11 +77,13 @@ public class PathSaver extends JPanel implements MouseMotionListener, MouseListe
         saver.setOpaque(true);
         frame.setContentPane(saver);
 
+        saver.manager = new PathManager();
+
         frame.pack();
         frame.setVisible(true);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                PathStorageManager.store("paths.txt", saver.getPaths());
+                saver.manager.store("paths.txt");
             }
         });
     }
